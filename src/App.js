@@ -35,11 +35,14 @@ function MousePosition() {
       setPosition({ x: e.clientX, y: e.clientY });
       console.log("Updating state");
     }
-    window.addEventListener("pointermove", handleMove);
+    if (typeof window !== "undefined")
+      window.addEventListener("pointermove", handleMove);
 
     return () => {
-      window.removeEventListener("pointermove", handleMove);
-      console.log("Unmounted");
+      if (typeof window !== "undefined") {
+        window.removeEventListener("pointermove", handleMove);
+        console.log("Unmounted");
+      }
     };
   }, []);
 
